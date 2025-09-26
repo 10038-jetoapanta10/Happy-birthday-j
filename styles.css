@@ -5,15 +5,23 @@
     box-sizing: border-box;
 }
 
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
 body {
     font-family: 'Georgia', serif;
-    overflow: hidden;
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background: radial-gradient(ellipse at bottom, #001a33 0%, #000511 100%);
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 /* Cometas normales con dirección correcta */
@@ -32,7 +40,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100px;
+    width: clamp(60px, 10vw, 100px);
     height: 1px;
     background: linear-gradient(90deg, 
         transparent,
@@ -62,7 +70,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 200px;
+    width: clamp(120px, 15vw, 200px);
     height: 3px;
     background: linear-gradient(90deg, 
         transparent,
@@ -126,13 +134,16 @@ body {
 
 /* Contenedor principal */
 .container {
-    position: relative;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10;
+    padding: 10px;
 }
 
 /* Flor contenedor */
@@ -148,16 +159,16 @@ body {
 
 /* Opacidad de la flor cuando se abre */
 .flower-wrapper.fade {
-    opacity: 0.15;
-    transform: scale(0.5) translateY(200px);
-    filter: blur(3px);
+    opacity: 0.05;
+    transform: scale(0.3) translateY(30vh);
+    filter: blur(5px);
 }
 
-/* Flor cerrada/abierta */
+/* Flor responsive */
 .flower {
     position: relative;
-    width: 700px;
-    height: 600px;
+    width: clamp(280px, 50vw, 500px);
+    height: clamp(280px, 50vw, 500px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -165,25 +176,24 @@ body {
 
 .petal {
     position: absolute;
-    width: 800px;
-    height: 800px;
-    top: -50%;
+    width: 40%;
+    height: 60%;
     background: linear-gradient(135deg, 
-        #05f7ba 0%, 
+        #00ffff 0%, 
         #40e0d0 30%, 
         #00ced1 60%, 
-        #05f7ba 100%);
+        #008b8b 100%);
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     transform-origin: center bottom;
     transition: transform 2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    box-shadow: 0 0 80px rrgba(4, 236, 147, 0.5)
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5),
                 inset 0 0 20px rgba(255, 255, 255, 0.2);
     opacity: 0.9;
 }
 
 /* Pétalos cerrados */
 .flower.closed .petal {
-    transform: rotate(var(--rotation)) rotateX(80deg) scale(0.9);
+    transform: rotate(var(--rotation)) rotateX(80deg) scale(0.8);
 }
 
 /* Pétalos abiertos */
@@ -200,13 +210,15 @@ body {
 .petal:nth-child(7) { --rotation: 270deg; }
 .petal:nth-child(8) { --rotation: 315deg; }
 
-/* Centro de la flor */
+/* Centro de la flor responsive */
 .flower-center {
     position: absolute;
-    width: 180px;
-    height: 180px;
-    top: 70%;  /* Ajusta el porcentaje o usa píxeles */
-    transform: translate(-50%, -50%); /* Esto lo centra perfectamente */
+    width: 26%;
+    height: 26%;
+    min-width: 60px;
+    min-height: 60px;
+    max-width: 120px;
+    max-height: 120px;
     background: radial-gradient(circle,
         #ffd700 0%,
         #ffb347 50%,
@@ -229,18 +241,20 @@ body {
     }
 }
 
-/* Texto "Click aquí" */
+/* Texto "Click aquí" responsive */
 .click-text {
     position: absolute;
-    top: -80px;
+    top: -15%;
     left: 50%;
     transform: translateX(-50%);
-    color: #05f7ba;
-    font-size: 2.5em;
-    font-weight: bold; 
-    text-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+    color: #00ffff;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: bold;
+    text-shadow: 0 0 30px rgba(0, 255, 255, 1),
+                 0 0 20px rgba(0, 255, 255, 0.8);
     animation: float 2s ease-in-out infinite;
     transition: opacity 0.5s ease;
+    white-space: nowrap;
 }
 
 .flower.open ~ .click-text {
@@ -257,24 +271,47 @@ body {
     }
 }
 
-/* Mensaje de cumpleaños creativo */
+/* Mensaje de cumpleaños responsive */
 .message-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     opacity: 0;
     transform: scale(0);
     transition: all 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     pointer-events: none;
-    z-index: 50;
-    background: radial-gradient(ellipse at center, 
-        rgba(0, 0, 0, 0.8) 0%, 
-        rgba(0, 0, 0, 0.4) 50%, 
-        transparent 100%);
+    z-index: 100;
+    padding: 20px 10px;
+    background: linear-gradient(to bottom, 
+        rgba(0, 0, 0, 0.95) 0%, 
+        rgba(0, 0, 0, 0.85) 50%, 
+        rgba(0, 0, 0, 0.95) 100%);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.message-container.show {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 1s;
+    pointer-events: all;
+}
+
+/* Contenedor interno para centrar contenido */
+.message-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    width: 100%;
+    padding: 40px 10px;
 }
 
 .message-container.show {
@@ -283,9 +320,9 @@ body {
     transition-delay: 1s;
 }
 
-/* Título principal con efecto 3D */
+/* Título principal responsive */
 h1 {
-    font-size: 7em;
+    font-size: clamp(2.5rem, 7vw, 6rem);
     font-weight: bold;
     color: #00ffff;
     text-shadow: 
@@ -293,23 +330,13 @@ h1 {
         0 0 20px #00ffff,
         0 0 40px #00ffff,
         0 0 80px #00ffff,
-        0 0 120px #00ffff,
-        0 0 160px #00ffff;
+        0 0 120px #40e0d0;
     animation: float-text 3s ease-in-out infinite;
-    margin-bottom: 40px;
-    letter-spacing: 5px;
+    margin-bottom: clamp(20px, 5vh, 40px);
+    letter-spacing: clamp(2px, 0.5vw, 5px);
     position: relative;
     z-index: 100;
-}
-
-h1::before {
-    content: '';
-}
-
-@keyframes gradient-shift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    text-align: center;
 }
 
 @keyframes float-text {
@@ -317,41 +344,38 @@ h1::before {
     50% { transform: translateY(-10px); }
 }
 
-/* Mensaje poético con diseño creativo */
+/* Mensaje poético responsive */
 .poem {
-    color: transparent;
-    font-size: 1.6em;
-    line-height: 2;
+    font-size: clamp(0.9rem, 2vw, 1.4rem);
+    line-height: 1.6;
     text-align: center;
-    max-width: 900px;
+    width: 90%;
+    max-width: 800px;
     position: relative;
+    padding: clamp(10px, 2vw, 20px);
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 15px;
+    border: 2px solid rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
 }
 
 .poem-line {
     display: block;
-    margin: 15px 0;
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(0, 255, 255, 0.1),
-        rgba(0, 255, 255, 0.05),
-        transparent);
-    padding: 10px;
+    margin: clamp(10px, 2vh, 20px) 0;
+    padding: clamp(5px, 1.5vh, 15px);
     position: relative;
     overflow: hidden;
 }
 
 .poem-line span {
-    background: linear-gradient(90deg,
-        #e0ffff,
-        #00ffff,
-        #40e0d0);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: text-glow 3s ease-in-out infinite;
+    color: #00ffff;
     display: inline-block;
-    text-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-    font-weight: 500;
+    font-weight: bold;
+    text-shadow: 
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 30px #40e0d0;
+    letter-spacing: 0.5px;
 }
 
 .poem-line::before {
@@ -372,15 +396,6 @@ h1::before {
     0% { left: -100%; }
     50% { left: 100%; }
     100% { left: -100%; }
-}
-
-@keyframes text-glow {
-    0%, 100% {
-        filter: brightness(1) drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
-    }
-    50% {
-        filter: brightness(1.2) drop-shadow(0 0 20px rgba(0, 255, 255, 0.8));
-    }
 }
 
 /* Partículas mágicas */
@@ -420,68 +435,275 @@ h1::before {
 }
 
 .dark-overlay.active {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.322);
 }
 
-/* Imágenes en las esquinas */
+/* Contenedor de imágenes de esquina */
 .corner-images {
-    display: none; /* ocultas al inicio */
-}
-
-.corner {
     position: fixed;
-    width: 350px;
-    z-index: 1;
-    pointer-events: auto; /* 👈 activamos el hover */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 30;
+    opacity: 0.9;
+    transition: opacity 2s ease;
+}
+
+.corner-images.show {
+    opacity: 1;
+}
+
+/* Estilo para cada imagen de esquina */
+.corner-image {
+    position: absolute;
+    width: clamp(80px, 15vw, 150px);
+    height: clamp(80px, 15vw, 150px);
+    object-fit: cover;
+    border-radius: 15px;
+    border: 3px solid #00ffff;
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.6),
+                0 0 50px rgba(0, 255, 255, 0.3);
     opacity: 0;
-    transform: scale(0.5);
-    transition: transform 0.3s ease;
+    transform: scale(0) rotate(-180deg);
+    transition: all 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-/* Animación de entrada */
-.corner.show {
-    animation: cornerEnter 1s ease forwards;
+.corner-images.show .corner-image {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
 }
 
-@keyframes cornerEnter {
-    0% {
-        opacity: 0;
-        transform: translateY(50px) scale(0.5); /* desde abajo y más pequeño */
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1); /* en su lugar y tamaño normal */
-    }
-}
-
-/* Hover animado */
-.corner:hover {
-    animation: bounce 0.8s infinite;
-    transform: scale(1.1) rotate(3deg); /* pequeño zoom + inclinación */
-}
-
-@keyframes bounce {
-    0%   { transform: scale(1)   rotate(0deg); }
-    30%  { transform: scale(1.2) rotate(-5deg); }
-    50%  { transform: scale(0.95) rotate(5deg); }
-    70%  { transform: scale(1.05) rotate(-3deg); }
-    100% { transform: scale(1.1) rotate(0deg); }
-}
-
-/* Posiciones */
-.top-left {
+/* Posicionamiento de cada imagen */
+.corner-image.top-left {
     top: 20px;
     left: 20px;
+    animation-delay: 0.2s;
 }
-.top-right {
+
+.corner-image.top-right {
     top: 20px;
     right: 20px;
+    animation-delay: 0.4s;
 }
-.bottom-left {
+
+.corner-image.bottom-left {
     bottom: 20px;
     left: 20px;
+    animation-delay: 0.6s;
 }
-.bottom-right {
+
+.corner-image.bottom-right {
     bottom: 20px;
     right: 20px;
+    animation-delay: 0.8s;
+}
+
+/* Animación flotante para las imágenes */
+.corner-images.show .corner-image {
+    animation: float-image 4s ease-in-out infinite;
+}
+
+.corner-image.top-left {
+    animation-delay: 0s;
+}
+
+.corner-image.top-right {
+    animation-delay: 1s;
+}
+
+.corner-image.bottom-left {
+    animation-delay: 2s;
+}
+
+.corner-image.bottom-right {
+    animation-delay: 3s;
+}
+
+@keyframes float-image {
+    0%, 100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.05) rotate(5deg);
+    }
+}
+
+/* Media queries para imágenes responsive */
+@media (max-width: 768px) {
+    .corner-image {
+        width: clamp(60px, 12vw, 100px);
+        height: clamp(60px, 12vw, 100px);
+    }
+    
+    .corner-image.top-left,
+    .corner-image.top-right {
+        top: 10px;
+    }
+    
+    .corner-image.bottom-left,
+    .corner-image.bottom-right {
+        bottom: 10px;
+    }
+    
+    .corner-image.top-left,
+    .corner-image.bottom-left {
+        left: 10px;
+    }
+    
+    .corner-image.top-right,
+    .corner-image.bottom-right {
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .corner-image {
+        width: 60px;
+        height: 60px;
+        border-width: 2px;
+    }
+}
+
+/* Modo horizontal */
+@media (max-height: 500px) and (orientation: landscape) {
+    .corner-image {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Tablets y pantallas medianas */
+@media (max-width: 768px) {
+    .flower {
+        width: 70vw;
+        height: 70vw;
+        max-width: 400px;
+        max-height: 400px;
+    }
+    
+    h1 {
+        font-size: 3.5rem;
+    }
+    
+    .poem {
+        font-size: 1.3rem;
+        padding: 15px;
+    }
+    
+    .click-text {
+        font-size: 1.5rem;
+    }
+    
+    .flower-wrapper.fade {
+        transform: scale(0.3) translateY(25vh);
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .flower {
+        width: 80vw;
+        height: 80vw;
+        max-width: 300px;
+        max-height: 300px;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .poem {
+        font-size: 1rem;
+        padding: 10px;
+    }
+    
+    .poem-line {
+        margin: 10px 0;
+        padding: 8px;
+    }
+    
+    .click-text {
+        font-size: 1.2rem;
+        top: -20%;
+    }
+    
+    .flower-wrapper.fade {
+        transform: scale(0.2) translateY(20vh);
+    }
+}
+
+/* Pantallas muy pequeñas */
+@media (max-width: 360px) {
+    .flower {
+        width: 85vw;
+        height: 85vw;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .poem {
+        font-size: 0.9rem;
+    }
+    
+    .click-text {
+        font-size: 1rem;
+    }
+}
+
+/* Pantallas grandes */
+@media (min-width: 1920px) {
+    .flower {
+        width: 600px;
+        height: 600px;
+    }
+    
+    h1 {
+        font-size: 7rem;
+    }
+    
+    .poem {
+        font-size: 2rem;
+    }
+    
+    .click-text {
+        font-size: 2.5rem;
+    }
+}
+
+/* Orientación horizontal en móviles */
+@media (max-height: 500px) and (orientation: landscape) {
+    .flower {
+        width: 40vh;
+        height: 40vh;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .poem {
+        font-size: 0.9rem;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    
+    .flower-wrapper.fade {
+        transform: scale(0.2) translateY(15vh);
+    }
+}
+
+/* Ocultar scroll pero permitir desplazamiento */
+.message-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE y Edge */
+    scroll-behavior: smooth; /* Scroll suave */
+}
+
+.message-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y Opera */
 }
