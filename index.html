@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz Cumpleaños JOSS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Feliz Cumpleaños Mi cielo</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,6 +11,14 @@
     <div class="dark-overlay" id="darkOverlay"></div>
     
     <div class="container">
+        <!-- Imágenes de las esquinas (ocultas inicialmente) -->
+        <div class="corner-images" id="cornerImages">
+            <img src="Imagen/img1.jpeg" alt="Recuerdo especial" class="corner-image top-left">
+            <img src="Imagen/img2.jpeg" alt="Momento feliz" class="corner-image top-right">
+            <img src="Imagen/img3.png" alt="Memoria querida" class="corner-image bottom-left">
+            <img src="Imagen/img4.png" alt="Instante mágico" class="corner-image bottom-right">
+        </div>
+
         <!-- Flor interactiva -->
         <div class="flower-wrapper" id="flowerWrapper" onclick="openFlower()">
             <div class="flower closed" id="flower">
@@ -24,48 +32,43 @@
                 <div class="petal"></div>
                 <div class="flower-center"></div>
             </div>
-            <div class="click-text">✨ Toca la flor Joss :) ✨</div>
+            <div class="click-text">✨Toca el sol joss✨</div>
         </div>
 
         <!-- Mensaje creativo -->
         <div class="message-container" id="message">
-            <h1>¡Feliz Cumple vida hermosa !</h1>
-            <div class="poem">
-                <div class="poem-line">
-                    <span>En este día especial, como los cometas en el cielo,</span>
-                </div>
-                <div class="poem-line">
-                    <span>tu luz atraviesa la oscuridad con su destello.</span>
-                </div>
-                <div class="poem-line">
-                    <span>Que cada deseo sea una estrella fugaz,</span>
-                </div>
-                <div class="poem-line">
-                    <span>y que la magia turquesa te envuelva en paz.</span>
-                </div>
-                <div class="poem-line">
-                    <span>Me gustas, me encantas. Desde tu sonrisa hasta tu manera</span>
-                </div>
-                <div class="poem-line">
-                    <span>Quiero vivir junto a ti, 1000 primaveras</span>
-                </div>
-                <div class="poem-line">
-                    <span>🎂 ¡Que todos tus sueños se hagan realidad 🎉</span>
-                </div>
-                <div class="poem-line">
-                    <span> Me gustas a morir! </span>
+            <div class="message-content">
+                <h1>¡Feliz Cumple Joss :)</h1>
+                <div class="poem">
+                    <div class="poem-line">
+                        <span>En este día especial, como los cometas en el cielo,</span>
+                    </div>
+                    <div class="poem-line">
+                        <span>tu luz atraviesa la oscuridad con su destello.</span>
+                    </div>
+                    <div class="poem-line">
+                        <span>Que cada deseo sea una estrella fugaz,</span>
+                    </div>
+                    <div class="poem-line">
+                        <span>y que la magia turquesa te envuelva en paz.</span>
+                    </div>
+                    <div class="poem-line">
+                        <span>-Me gustas, me encantas. Desde tu sonrisa hasta tu manera </span>
+                    </div>
+                    <div class="poem-line">
+                        <span>Quiero vivir junto a ti, 1000 primaveras</span>
+                    </div>
+                    <div class="poem-line">
+                        <span>🎂 ¡Que todos tus sueños se hagan realidad! 🎉</span>
+                    </div>
+                    <div class="poem-line">
+                        <span>Me gustas a morir!</span>
+                    </div>
                 </div>
             </div>
+            <div class="scroll-indicator" id="scrollIndicator">⬇</div>
         </div>
     </div>
-
-<div class="corner-images" id="cornerImages">
-    <img src="Imagen\img1.jpeg" alt="esquina superior izquierda" class="corner top-left">
-    <img src="Imagen\img2.jpeg" alt="esquina superior derecha" class="corner top-right">
-    <img src="Imagen\img3.png" alt="esquina inferior izquierda" class="corner bottom-left">
-    <img src="Imagen\img4.png" alt="esquina inferior derecha" class="corner bottom-right">
-</div>
-
 
     <script src="script.js"></script>
 </body>
