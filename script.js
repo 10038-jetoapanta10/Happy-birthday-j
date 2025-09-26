@@ -123,49 +123,52 @@ let isOpen = false;
 // Función para abrir la flor
 function openFlower() {
     if (!isOpen) {
-        const flower = document.getElementById("flower");
-        const flowerWrapper = document.getElementById("flowerWrapper");
-        const message = document.getElementById("message");
-        const darkOverlay = document.getElementById("darkOverlay");
-        const cornerImages = document.getElementById("cornerImages");
-
-        // Abre la flor
-        flower.classList.remove("closed");
-        flower.classList.add("open");
-
+        const flower = document.getElementById('flower');
+        const flowerWrapper = document.getElementById('flowerWrapper');
+        const message = document.getElementById('message');
+        const darkOverlay = document.getElementById('darkOverlay');
+        const cornerImages = document.getElementById('cornerImages');
+        
+        // Abrir la flor
+        flower.classList.remove('closed');
+        flower.classList.add('open');
+        
         // Opacar la flor después de abrirse
         setTimeout(() => {
-            flowerWrapper.classList.add("fade");
-            darkOverlay.classList.add("active");
+            flowerWrapper.classList.add('fade');
+            darkOverlay.classList.add('active');
         }, 1500);
-
-        // Mostrar mensaje + cometas + imágenes
+        
+        // Mostrar mensaje
         setTimeout(() => {
-            message.classList.add("show");
-            cornerImages.style.display = "block";
-            document.querySelectorAll(".corner").forEach((img, i) => {
-                setTimeout(() => img.classList.add("show"), i * 300); 
-            });
+            message.classList.add('show');
+            
+            // Mostrar las imágenes de las esquinas
+            setTimeout(() => {
+                cornerImages.classList.add('show');
+            }, 500);
+            
             // Iniciar lluvia intensa de cometas
+            // Crear muchos cometas iniciales
             for (let i = 0; i < 30; i++) {
                 setTimeout(() => createSpecialComet(), i * 100);
             }
+            
+            // Continuar creando cometas
             specialCometInterval = setInterval(() => {
                 createSpecialComet();
-                if (Math.random() > 0.5) createSpecialComet();
-                if (Math.random() > 0.7) createSpecialComet();
+                if (Math.random() > 0.5) createSpecialComet(); // A veces crear dos
+                if (Math.random() > 0.7) createSpecialComet(); // A veces crear tres
             }, 200);
-
+            
         }, 500);
-
+        
         // Crear partículas mágicas
         createMagicParticles();
-
+        
         isOpen = true;
     }
 }
-
-
 
 // Inicialización cuando carga la página
 document.addEventListener('DOMContentLoaded', function() {
@@ -193,4 +196,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 2000);
         }
     });
+
+    // Detectar scroll en el mensaje para ocultar indicador
+    const messageContainer = document.getElementById('message');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    
+    if (messageContainer && scrollIndicator) {
+        messageContainer.addEventListener('scroll', function() {
+            if (this.scrollTop > 10) {
+                this.classList.add('scrolled');
+            } else {
+                this.classList.remove('scrolled');
+            }
+        });
+    }
 });
